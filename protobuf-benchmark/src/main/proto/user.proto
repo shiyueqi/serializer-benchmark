@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.unionpay.serializer.protobuf.user";
+option java_outer_classname = "UserProto";
+option objc_class_prefix = "HLW";
+
+package user;
+
+
+
+message User {
+    int64 id = 1;
+    string userName = 2;
+    repeated string everUsedName = 3;
+    int32 gender = 4;
+    int32 age = 5;
+    sint32 praiseCount = 6;
+    repeated int64 fanId = 7;
+    repeated int64 followerId = 8;
+    repeated string fanName = 9;
+    repeated string followName = 10;
+    repeated sint64 weightId = 11;
+
+    UserAddress userAddress = 12;
+
+    repeated UserOrder userOrder = 13;
+
+}
+
+message UserAddress {
+    int64 id = 1;
+    string address = 2;
+    string phone = 3;
+}
+
+message UserOrder {
+    int64 id = 1;
+    int64 gmtCreate = 2;
+    sint32 money = 3;
+    string location = 4;
+}
