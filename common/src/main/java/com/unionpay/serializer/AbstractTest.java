@@ -102,9 +102,10 @@ public abstract class AbstractTest implements Serializer{
      * @param serializeEndTime
      */
     private void printSerializeTime(long serializeStartTime, long serializeEndTime) {
-        System.out.println("serialize tps: " + this.getCallCount() * 1000000000 / (serializeEndTime - serializeStartTime)
-                + ", startTime: " + serializeStartTime + ", endTime: " + serializeEndTime + ", total time: "
-                + (serializeEndTime - serializeStartTime) + "ns");
+        long totalTime = serializeEndTime - serializeStartTime;
+        double tps = callCount * 1000000000.0 / totalTime;
+        System.out.println("serialize tps: " + tps + ", startTime: " + serializeStartTime
+                + ", endTime: " + serializeEndTime + ", total time: " + totalTime + "ns");
     }
 
     /**
@@ -113,9 +114,10 @@ public abstract class AbstractTest implements Serializer{
      * @param deserializeEndTime
      */
     private void printDeserializeTime(long deserializeStartTime, long deserializeEndTime) {
-        System.out.println("deserialize tps: " + this.getCallCount() * 1000000000 / (deserializeEndTime - deserializeStartTime)
-                + ", startTime: " + deserializeStartTime + ", endTime: " + deserializeEndTime + ", total time: "
-                + (deserializeEndTime - deserializeStartTime) + "ns");
+        long totalTime = deserializeEndTime - deserializeStartTime;
+        double tps = callCount * 1000000000.0 / totalTime;
+        System.out.println("deserialize tps: " + tps + ", startTime: " + deserializeStartTime
+                + ", endTime: " + deserializeEndTime + ", total time: " + totalTime + "ns");
     }
 
 }

@@ -32,18 +32,28 @@ public class ThriftTest extends AbstractTest implements Serializer{
     @Override
     public byte[] serialize(int callCount, Object obj) {
         try {
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            TTransport trans = new TIOStreamTransport(out);
-            TBinaryProtocol tp = new TBinaryProtocol(trans);
+            ByteArrayOutputStream byteArrayOutputStream = null;
+            TTransport tTransport = null;
+            TCompactProtocol tProtocol = null;
             byte[] bytes = null;
 
             for (int i = 0; i < callCount; i++) {
-                ((User)obj).write(tp);
-                bytes = out.toByteArray();
-                System.out.println("call num " + i + ", bytes size is: " + bytes.length);
+                byteArrayOutputStream = new ByteArrayOutputStream();
+                tTransport = new TIOStreamTransport(byteArrayOutputStream);
+                tProtocol = new TCompactProtocol(tTransport);
+
+                ((User)obj).write(tProtocol);
+                bytes = byteArrayOutputStream.toByteArray();
+
+                byteArrayOutputStream.close();
+                tTransport.close();
+
+                //System.out.println("call num " + i + ", bytes size is: " + bytes.length);
             }
 
             return bytes;
+        } catch (IOException e) {
+            e.printStackTrace();
         } catch (TException e) {
             e.printStackTrace();
         }
@@ -54,17 +64,27 @@ public class ThriftTest extends AbstractTest implements Serializer{
     @Override
     public Object deserialize(int callCount, byte[] bytes) {
         try {
-            ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-            TTransport trans = new TIOStreamTransport(in);
-            TBinaryProtocol tp = new TBinaryProtocol(trans);
+            ByteArrayInputStream byteArrayInputStream = null;
+            TTransport tTransport = null;
+            TCompactProtocol tProtocol = null;
             User user = new User();
 
             for (int i = 0; i < callCount; i++) {
-                user.read(tp);
-                System.out.println("call num " + i + ", user is: " + user);
+                byteArrayInputStream = new ByteArrayInputStream(bytes);
+                tTransport = new TIOStreamTransport(byteArrayInputStream);
+                tProtocol = new TCompactProtocol(tTransport);
+
+                user.read(tProtocol);
+
+                byteArrayInputStream.close();
+                tTransport.close();
+
+                //System.out.println("call num " + i + ", user is: " + user.toString());
             }
 
             return user;
+        } catch (IOException e) {
+            e.printStackTrace();
         } catch (TException e) {
             e.printStackTrace();
         }
