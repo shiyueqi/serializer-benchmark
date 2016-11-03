@@ -7,6 +7,8 @@ import com.unionpay.serializer.Serializer;
 import com.unionpay.serializer.json.common.Users;
 import com.unionpay.serializer.json.dto.User;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * date: 2016/10/31 14:43.
  * author: Yueqi Shi
@@ -24,22 +26,34 @@ public class JsonTest extends AbstractTest implements Serializer {
 
     @Override
     public byte[] serialize(int callCount, Object obj) {
-        byte[] bytes = null;
-        for (int i = 0; i < callCount; i++) {
-            bytes = JSONObject.toJSONBytes(obj);
+        try {
+            byte[] bytes = null;
+            for (int i = 0; i < callCount; i++) {
+                bytes = JSONObject.toJSONBytes(obj);
+            }
+
+            return bytes;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        return bytes;
+        return new byte[0];
     }
 
     @Override
     public Object deserialize(int callCount, byte[] bytes) {
-        User user = null;
-        for (int i = 0; i < callCount; i++) {
-            user = (User)JSON.parse(bytes);
+        try {
+            User user = null;
+            for (int i = 0; i < callCount; i++) {
+                user = JSONObject.parseObject(bytes, User.class);
+            }
+
+            return user;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        return user;
+        return new User();
     }
 
 
