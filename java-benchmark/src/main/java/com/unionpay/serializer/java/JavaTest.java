@@ -23,18 +23,22 @@ public class JavaTest extends AbstractTest implements Serializer{
 
     public byte[] serialize(int callCount, Object obj) {
         try {
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+            ByteArrayOutputStream byteArrayOutputStream = null;
+            ObjectOutputStream objectOutputStream = null;
             byte[] bytes = null;
 
             for (int i = 0; i < callCount; i++) {
+                byteArrayOutputStream = new ByteArrayOutputStream();
+                objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+
                 objectOutputStream.writeObject(obj);
                 bytes = byteArrayOutputStream.toByteArray();
-                System.out.println("call num " + i + ", bytes size is: " + bytes.length);
-            }
 
-            byteArrayOutputStream.close();
-            objectOutputStream.close();
+                byteArrayOutputStream.close();
+                objectOutputStream.close();
+
+                //System.out.println("call num " + i + ", bytes size is: " + bytes.length);
+            }
 
             return bytes;
         } catch (IOException e) {
@@ -46,17 +50,21 @@ public class JavaTest extends AbstractTest implements Serializer{
 
     public Object deserialize(int callCount, byte[] bytes) {
         try {
-            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
-            ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
+            ByteArrayInputStream byteArrayInputStream = null;
+            ObjectInputStream objectInputStream = null;
             User user = null;
 
             for (int i = 0; i < callCount; i++) {
-                user = (User)objectInputStream.readObject();
-                System.out.println("call num " + i + ", user is: " + user);
-            }
+                byteArrayInputStream = new ByteArrayInputStream(bytes);
+                objectInputStream = new ObjectInputStream(byteArrayInputStream);
 
-            byteArrayInputStream.close();
-            objectInputStream.close();
+                user = (User)objectInputStream.readObject();
+
+                byteArrayInputStream.close();
+                objectInputStream.close();
+
+                //System.out.println("call num " + i + ", user is: " + user);
+            }
 
             return user;
         } catch (IOException e) {
