@@ -2,15 +2,11 @@ package com.unionpay.serializer;
 
 import com.unionpay.serializer.util.BytesUtil;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 /**
  * date: 2016/10/28 19:05.
  * author: Yueqi Shi
  */
-public abstract class AbstractTest implements Serializer{
+public abstract class AbstractTest implements Serializer {
 
     /**
      * 调用次数
@@ -54,7 +50,7 @@ public abstract class AbstractTest implements Serializer{
 
 
     /**
-     * 序列化和反序列化实现
+     * 序列化和反序列化性能测试
      */
     public void exec() {
         this.printSerializeBytesSize(this.user);
