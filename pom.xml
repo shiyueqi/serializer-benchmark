@@ -30,6 +30,7 @@
         <module>thrift-benchmark</module>
         <module>common</module>
         <module>java-benchmark</module>
+        <module>statistics</module>
     </modules>
 
     <properties>

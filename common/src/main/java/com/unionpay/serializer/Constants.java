@@ -10,6 +10,17 @@ import java.util.List;
 public class Constants {
 
     /**
+     * serializeTest names
+     */
+    public static final String SERIALIZER_JAVA = "java";
+
+    public static final String SERIALIZER_JSON = "fastjson";
+
+    public static final String SERIALIZER_PROTOBUF = "protobuf";
+
+    public static final String SERIALIZER_THRIFT = "thrift";
+
+    /**
      * User POJO data
      */
     public static final long userId = 1L;
